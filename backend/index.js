@@ -2,16 +2,17 @@ import express from "express";
 
 import mongoose from "mongoose";
 
+import multer from "multer";
+
 import {
   registerValidation,
   loginValidation,
   postCreateValidation,
 } from "./validations/validations.js";
 
-import checkAuth from "./utils/checkAuth.js";
+import { userController, postController } from "./controllers/index.js";
 
-import * as userController from "./controllers/userController.js";
-import * as postController from "./controllers/postController.js";
+import { checkAuth, validationErrors } from "./utils/index.js";
 
 mongoose
   .connect(
@@ -27,21 +28,55 @@ mongoose
 const app = express();
 
 app.use(express.json());
+app.use("/uploads", express.static("uploads"));
 
 app.get("/", (req, res) => {
   res.send(req.body);
 });
-app.post("/auth/login", loginValidation, userController.Login());
-
-app.post("/auth/register", registerValidation, userController.Register());
-
+app.post(
+  "/auth/login",
+  loginValidation,
+  validationErrors,
+  userController.Login()
+);
+app.post(
+  "/auth/register",
+  registerValidation,
+  validationErrors,
+  userController.Register()
+);
 app.get("/auth/me", checkAuth, userController.getMe());
 
-app.get("/posts", postCreateValidation, postController.getAll);
+app.get("/posts", checkAuth, postCreateValidation, postController.getAll);
+app.post(
+  "/posts",
+  checkAuth,
+  postCreateValidation,
+  validationErrors,
+  postController.create
+);
 
-app.get("/posts/:id", postCreateValidation, postController.getOne);
+const storage = multer.diskStorage({
+  destination: (_, __, cb) => {
+    cb(null, "uploads");
+  },
+  filename: (_, file, cb) => {
+    cb(null, file.originalname);
+  },
+});
 
-app.post("/posts", checkAuth, postCreateValidation, postController.create);
+const upload = multer({ storage });
+
+app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
+  try {
+    res.json({
+      url: `/uploads/${req.file.originalname}`,
+    });
+  } catch (err) {
+    console.log(err);
+    res.status(404).json({ message: "Не удалось получить изображение" });
+  }
+});
 
 app.listen(4444, (err) => {
   if (err) {
@@ -49,3 +84,12 @@ app.listen(4444, (err) => {
   }
   console.log("Ok");
 });
+
+// app.get("/posts/:id", checkAuth, postCreateValidation, postController.getOne);
+
+// app.delete(
+//   "/posts/:id",
+//   checkAuth,
+//   postCreateValidation,
+//   postController.remove
+// );

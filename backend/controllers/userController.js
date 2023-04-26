@@ -1,7 +1,5 @@
 import jwt from "jsonwebtoken";
 
-import { validationResult } from "express-validator";
-
 import UserModel from "../models/User.js";
 
 export const Login = () => async (req, res) => {
@@ -33,10 +31,6 @@ export const Login = () => async (req, res) => {
 };
 export const Register = () => async (req, res) => {
   try {
-    const errors = validationResult(req);
-    if (!errors.isEmpty()) {
-      return res.status(400).json(errors.array());
-    }
     const doc = new UserModel({
       email: req.body.email,
       fullName: req.body.fullName,

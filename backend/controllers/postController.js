@@ -11,25 +11,39 @@ export const getAll = async (req, res) => {
 
 export const getOne = async (req, res) => {
   try {
-    const postID = req.params.id;
+    const postId = req.params.id;
 
-    const post = await new PostModel.findById(postID);
-
-    // PostModel.findByIdAndRemove(
-    //   {
-    //     _id: postID,
-    //   },
-    //   {
-    //     $inc: { viewsCount: 1 },
-    //   },
-    //   {
-    //     returnDocument: "after",
-    //   }
-    // );
+    const post = await PostModel.findById({ _id: postId })
+      .populate("user")
+      .exec();
     res.json(post);
+    console.log(post);
   } catch (err) {
     console.log(err);
-    res.status(500).json({ message: "Не удалось получить ДАННУЮ СТАТЬЮ" });
+    res.status(505).json({ message: "Не получилось получить доступ к статье" });
+  }
+};
+
+export const remove = async (req, res) => {
+  try {
+    const postId = req.params.id;
+    PostModel.findOneAndDelete(
+      {
+        _id: postId,
+      },
+      (err, doc) => {
+        if (err) {
+          res.status(404).json({ message: "не удалось удалить" });
+        }
+        if (!doc) {
+          res.status(404).json({ message: "не удалось удалить" });
+        }
+        res.json({ succses: true });
+      }
+    );
+  } catch (err) {
+    console.log(err);
+    res.status(505).json({ message: "Не удалось удалить статью" });
   }
 };
 
@@ -66,3 +80,29 @@ export const create = async (req, res) => {
 
 //         res.json(doc);
 //       }
+
+// try {
+//   const postId = req.params.id;
+//   PostModel.findByIdAndUpdate(
+//     { _id: postId },
+//     {
+//       $inc: { viewsCount: 1 },
+//     },
+//     { returnDocument: "after" },
+//     (err, doc) => {
+//       if (err) {
+//         console.log(err);
+//         return res.json({ message: "Не удалось получить одну статью" });
+//       }
+//       if (!doc) {
+//         console.log(doc);
+//         return res.json({ message: "Не удалось получить одну статью" });
+//       }
+//       res.json(doc);
+//     }
+//   );
+// } catch (err) {
+//   console.log(err);
+//   res.status(500).json({ message: "Не удалось получить ДАННУЮ СТАТЬЮ" });
+// }
+// };
