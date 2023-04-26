@@ -10,7 +10,11 @@ import {
   postCreateValidation,
 } from "./validations/validations.js";
 
-import { userController, postController } from "./controllers/index.js";
+import {
+  userController,
+  postController,
+  imageController,
+} from "./controllers/index.js";
 
 import { checkAuth, validationErrors } from "./utils/index.js";
 
@@ -48,6 +52,9 @@ app.post(
 app.get("/auth/me", checkAuth, userController.getMe());
 
 app.get("/posts", checkAuth, postCreateValidation, postController.getAll);
+app.get("/posts/:id", checkAuth, postCreateValidation, postController.getOne);
+app.delete("/posts/:id", checkAuth, postController.remove);
+app.patch("/posts/:id", checkAuth, postController.update);
 app.post(
   "/posts",
   checkAuth,
@@ -67,16 +74,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage });
 
-app.post("/upload", checkAuth, upload.single("image"), (req, res) => {
-  try {
-    res.json({
-      url: `/uploads/${req.file.originalname}`,
-    });
-  } catch (err) {
-    console.log(err);
-    res.status(404).json({ message: "Не удалось получить изображение" });
-  }
-});
+app.post("/upload", checkAuth, upload.single("image"), imageController.upload);
 
 app.listen(4444, (err) => {
   if (err) {
@@ -84,12 +82,3 @@ app.listen(4444, (err) => {
   }
   console.log("Ok");
 });
-
-// app.get("/posts/:id", checkAuth, postCreateValidation, postController.getOne);
-
-// app.delete(
-//   "/posts/:id",
-//   checkAuth,
-//   postCreateValidation,
-//   postController.remove
-// );
