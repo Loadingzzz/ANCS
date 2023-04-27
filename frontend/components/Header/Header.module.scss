@@ -1,0 +1,19 @@
+.header {
+  //   position: fixed;
+  //   top: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0px;
+
+  border-bottom: 1px solid blue;
+  .logo {
+    font-size: 20px;
+    padding-left: 30px;
+  }
+  .buttonGroup {
+    padding-right: 30px;
+    display: flex;
+    gap: 20px;
+  }
+}
