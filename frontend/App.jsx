@@ -14,7 +14,7 @@ function App() {
       <Header />
       <Container maxWidth="lg">
         <Routes>
-          <Route path="/ANCS/" element={<Home />} />
+          {/* <Route path="/ANCS/" element={<Home />} /> */}
           <Route path="/ANCS/login" element={<Login />} />
           <Route path="/ANCS/registration" element={<Registration />} />
           <Route path="/ANCS/post:id" element={<PostPage />} />
