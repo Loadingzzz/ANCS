@@ -1,12 +1,12 @@
-import { useState } from "react";
 import "./index.css";
 import Home from "./Components/Home/Home";
 import Header from "./Components/Header/Header";
-import { Container } from "@mui/material";
 import Login from "./Pages/Login/Login";
 import Registration from "./Pages/Registration/Registration";
-import { Routes, Route } from "react-router-dom";
 import PostPage from "./Components/PostPage/PostPage";
+
+import { Container } from "@mui/material";
+import { Routes, Route } from "react-router-dom";
 
 function App() {
   return (
