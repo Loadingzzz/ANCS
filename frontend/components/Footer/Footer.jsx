@@ -7,8 +7,8 @@ const Footer = () => {
     <footer className={styles.footer}>
       <div className={styles.logo}>Logo</div>
       <div className={styles.buttonGroup}>
-        <Button variant="contained">Войти</Button>
-        <Button variant="outlined">Зарегистрироваться</Button>
+        <Button variant="text">Войти</Button>
+        <Button variant="contained">Зарегистрироваться</Button>
       </div>
     </footer>
   );

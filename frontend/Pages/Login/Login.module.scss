@@ -1,0 +1,63 @@
+.form {
+  width: 400px;
+  padding: 30px 20px;
+  margin: auto;
+  margin-top: 150px;
+  border: 1px solid black;
+  border-radius: 4px;
+  .form__title {
+    text-align: center;
+  }
+
+  .label__name__input {
+    display: flex;
+    margin: auto;
+    background-color: #fff;
+    width: 90%;
+    padding: 10px 20px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  .label__name__error {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: rgb(193, 0, 0);
+    margin-bottom: 10px;
+    font-weight: 700;
+  }
+  .btn__wrapper {
+    margin-top: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    .from__submit {
+      min-width: 160px;
+      box-sizing: border-box;
+      font-family: "Montserrat", sans-serif;
+      background-color: #fff;
+      border-radius: 4px;
+      font-weight: 700;
+      padding: 10px 20px;
+    }
+  }
+
+  .label__password__input {
+    display: flex;
+    margin: auto;
+    background-color: #fff;
+    width: 90%;
+    padding: 10px 20px;
+    font-size: 14px;
+    margin-top: 5px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+  }
+  .label__password__error {
+    font-size: 12px;
+    text-transform: uppercase;
+    color: rgb(193, 0, 0);
+    font-weight: 700;
+  }
+}

@@ -1,0 +1,30 @@
+.post {
+  margin: auto;
+  width: 1200px;
+  border: 1px solid rgb(194, 202, 255);
+  box-shadow: 0px 11px 20px rgb(194, 202, 255);
+  margin-bottom: 30px;
+  margin-top: 30px;
+  padding: 30px 40px;
+  min-height: 100%;
+  .post__title {
+    text-align: left;
+    font-size: 36px;
+    line-height: 44px;
+  }
+  .post__text {
+    margin: 15px 0;
+    text-align: left;
+  }
+  .post__imgage__wrapper {
+    display: flex;
+    justify-content: start;
+    align-items: center;
+    .post__image {
+      width: 600px;
+      height: 200px;
+      background-size: contain;
+      background-repeat: no-repeat;
+    }
+  }
+}

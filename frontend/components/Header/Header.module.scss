@@ -1,19 +1,25 @@
 .header {
-  //   position: fixed;
-  //   top: 0;
+  font-family: "Montserrat", sans-serif;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 20px 0px;
 
-  border-bottom: 1px solid blue;
+  // box-shadow: 2px 0px 12px rgb(84, 106, 249);
+  box-shadow: 0px 1px 20px rgb(194, 202, 255);
   .logo {
+    text-decoration: none;
+    font-weight: 700;
     font-size: 20px;
     padding-left: 30px;
+    color: rgb(78, 78, 248);
   }
   .buttonGroup {
     padding-right: 30px;
     display: flex;
     gap: 20px;
+    .button__register {
+      font-size: 16px;
+    }
   }
 }
