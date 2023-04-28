@@ -5,9 +5,6 @@ const Home = () => {
   return (
     <div>
       <Post />
-      <Post />
-      <Post />
-      <Post />
     </div>
   );
 };
