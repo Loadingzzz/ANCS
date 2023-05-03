@@ -2,24 +2,24 @@ import React from "react";
 import styles from "./Post.module.scss";
 import { Link } from "react-router-dom";
 
-const Post = () => {
+const Post = (props) => {
   return (
     <div className={styles.post}>
       <Link to={"/ANCS/post:id"} className={styles.post__title}>
-        Я заголовок первого поста
+        {props.title}
       </Link>
-      <p className={styles.post__text}>
-        Я текс первого постаЯ текс первого постаЯ текс первого постаЯ текс
-        первого постаЯ текс первого постаЯ текс первого постаЯ текс первого
-        постаЯ текс первого постаЯ текс первого поста
-      </p>
+      <p className={styles.post__text}>{props.text}</p>
       <div className={styles.post__imgage__wrapper}>
-        <div
-          className={styles.post__image}
-          style={{
-            backgroundImage: "url(../../../backend/uploads/logo-og.png)",
-          }}
-        ></div>
+        {props.image ? (
+          <div
+            className={styles.post__image}
+            style={{
+              backgroundImage: `${props.image}`,
+            }}
+          ></div>
+        ) : (
+          <></>
+        )}
       </div>
     </div>
   );

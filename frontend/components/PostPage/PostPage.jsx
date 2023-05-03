@@ -5,7 +5,7 @@ import { Link } from "react-router-dom";
 const PostPage = () => {
   return (
     <div className={styles.post}>
-      <Link to={"/ANCS/post"} className={styles.post__title}>
+      <Link to={"/ANCS/post:id"} className={styles.post__title}>
         Я заголовок первого поста
       </Link>
       <p className={styles.post__text}>

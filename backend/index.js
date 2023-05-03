@@ -4,6 +4,8 @@ import mongoose from "mongoose";
 
 import multer from "multer";
 
+import cors from "cors";
+
 import {
   registerValidation,
   loginValidation,
@@ -32,6 +34,7 @@ mongoose
 const app = express();
 
 app.use(express.json());
+app.use(cors());
 app.use("/uploads", express.static("uploads"));
 
 app.get("/", (req, res) => {
@@ -51,7 +54,7 @@ app.post(
 );
 app.get("/auth/me", checkAuth, userController.getMe());
 
-app.get("/posts", checkAuth, postCreateValidation, postController.getAll);
+app.get("/posts", postCreateValidation, postController.getAll);
 app.get("/posts/:id", checkAuth, postCreateValidation, postController.getOne);
 app.delete("/posts/:id", checkAuth, postController.remove);
 app.patch("/posts/:id", checkAuth, postController.update);
