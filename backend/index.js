@@ -57,7 +57,7 @@ app.get("/auth/me", checkAuth, userController.getMe());
 app.get("/tags", postController.getLastTags);
 
 app.get("/posts", postCreateValidation, postController.getAll);
-app.get("/posts/:id", checkAuth, postCreateValidation, postController.getOne);
+app.get("/posts/:id", postCreateValidation, postController.getOne);
 app.delete("/posts/:id", checkAuth, postController.remove);
 app.patch("/posts/:id", checkAuth, postController.update);
 app.post(

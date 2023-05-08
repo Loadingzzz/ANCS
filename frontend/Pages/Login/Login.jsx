@@ -1,31 +1,42 @@
 import React from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useForm } from "react-hook-form";
 import styles from "./Login.module.scss";
+import { fetchUsers, selectorIsAuth } from "../../redux/Slice/auth";
+import { Navigate } from "react-router-dom";
 
 const Login = () => {
+  const dispatch = useDispatch();
+  const isAuth = useSelector(selectorIsAuth);
+
   const {
     register,
     reset,
-    formState: { errors },
+    setError,
+    formState: { errors, isValid },
     handleSubmit,
-  } = useForm({ mode: onblur });
-  const onSubmit = (data) => {
-    alert(JSON.stringify(data));
+  } = useForm(
+    {
+      defaultValues: {
+        email: "testMail1@mail.ru",
+        password: "12345",
+      },
+    },
+    { mode: onblur }
+  );
+  const onSubmit = async (values) => {
+    const data = await dispatch(fetchUsers(values));
+    console.log(data.payload.token);
+    window.localStorage.setItem("token", data.payload.token);
     reset();
   };
+
+  if (isAuth) {
+    return <Navigate to="/ANCS/" />;
+  }
   return (
     <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
       <h1 className={styles.form__title}>Войти</h1>
-      <label htmlFor="firstname" className={styles.label__name__title}>
-        Имя
-        <input
-          className={styles.label__name__input}
-          {...register("firstname", {
-            required: "Поле Имя обязательно к заполнению",
-          })}
-          id="firstname"
-        />
-      </label>
       <div className={styles.label__name__error}>
         {errors?.firstname && <p>{errors?.firstname?.message || "Error!"}</p>}
       </div>
@@ -50,8 +61,8 @@ const Login = () => {
           {...register("password", {
             required: "Поле Пароль обязательно к заполнению",
             minLength: {
-              value: 8,
-              message: "Пароль должен содержать минимум 8 символов",
+              value: 5,
+              message: "Пароль должен содержать минимум 5 символов",
             },
           })}
           id="password"

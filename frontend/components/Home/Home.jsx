@@ -10,11 +10,12 @@ import { Post } from "../Post/Post";
 const Home = () => {
   const dispatch = useDispatch();
 
+  const userData = useSelector((state) => state.auth.data);
+
   const { posts, tags } = useSelector((state) => state.posts);
 
   const isPostsLoading = posts.status === "loading";
   const isTagsLoading = tags.status === "loading";
-  console.log(posts.items);
 
   useEffect(() => {
     dispatch(fetchPosts());
@@ -39,14 +40,17 @@ const Home = () => {
               return (
                 <Post
                   key={index}
-                  id={obj._id}
+                  _id={obj._id}
                   title={obj.title}
-                  imageUrl={obj.imageUrl}
+                  imageUrl={
+                    obj.imageUrl ? `http://localhost:4444${obj.imageUrl}` : ""
+                  }
                   user={obj.user}
                   createdAt={"12 июня 2022 г."}
-                  viewsCount={150}
-                  commentsCount={3}
+                  viewsCount={obj.viewsCount}
+                  commentsCount={2}
                   tags={["react", "fun", "typescript"]}
+                  // isEditable={userData?._id == obj.user._id}
                   isEditable
                 />
               );
